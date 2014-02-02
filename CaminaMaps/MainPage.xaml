@@ -15,40 +15,88 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
-        <!-- LOCALIZATION NOTE:
-            To localize the displayed strings copy their values to appropriately named
-            keys in the app's neutral language resource file (AppResources.resx) then
-            replace the hard-coded text value between the attributes' quotation marks
-            with the binding clause whose path points to that string name.
+        <!--Panorama control-->
+        <phone:Panorama Title="Camina Dev">
+            <phone:Panorama.Background>
+                <ImageBrush ImageSource="/CaminaReadings_v2;component/Assets/PanoramaBackground.png"/>
+            </phone:Panorama.Background>
 
-            For example:
+            <!--Panorama item one-->
+            <phone:PanoramaItem  Header="Collect Data" Width="480">
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Description</TextBlock>
+                            <TextBox x:Name="description" Width="354"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock>Subject</TextBlock>
+                            <TextBox x:Name="subject" Width="364"/>
+                        </StackPanel>
+                    </StackPanel>
 
-                Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="28">Starting Time:</TextBlock>
+                            <TextBlock FontSize="28" Name="txtStartTime"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="28">Updates every</TextBlock>
+                            <TextBlock FontSize="28" Name="txtCompassTimeBetweenUpdates"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="28">Compass:</TextBlock>
+                            <TextBlock FontSize="28" Name="txtCompassCalibration"></TextBlock>
+                            <TextBlock FontSize="28" Name="txtCompass"></TextBlock>
 
-            This binding points to the template's string resource named "ApplicationTitle".
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="28">Acceleration: (</TextBlock>
+                            <TextBlock FontSize="28" Name="txtAccelerationX"></TextBlock>
+                            <TextBlock FontSize="28">,</TextBlock>
+                            <TextBlock FontSize="28" Name="txtAccelerationY"></TextBlock>
+                            <TextBlock FontSize="28">,</TextBlock>
+                            <TextBlock FontSize="28" Name="txtAccelerationZ"></TextBlock>
+                            <TextBlock FontSize="28">)</TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="28">Gyro Speed: (</TextBlock>
+                            <TextBlock FontSize="28" Name="txtGyroSpeedX"></TextBlock>
+                            <TextBlock FontSize="28">,</TextBlock>
+                            <TextBlock FontSize="28" Name="txtGyroSpeedY"></TextBlock>
+                            <TextBlock FontSize="28">,</TextBlock>
+                            <TextBlock FontSize="28" Name="txtGyroSpeedZ"></TextBlock>
+                            <TextBlock FontSize="28">)</TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="28">Gyro Cumulative: (</TextBlock>
+                            <TextBlock FontSize="28" Name="txtGyroCumulativeX"></TextBlock>
+                            <TextBlock FontSize="28">,</TextBlock>
+                            <TextBlock FontSize="28" Name="txtGyroCumulativeY"></TextBlock>
+                            <TextBlock FontSize="28">,</TextBlock>
+                            <TextBlock FontSize="28" Name="txtGyroCumulativeZ"></TextBlock>
+                            <TextBlock FontSize="28">)</TextBlock>
+                        </StackPanel>
+                    </StackPanel>
 
-            Adding supported languages in the Project Properties tab will create a
-            new resx file per language that can carry the translated values of your
-            UI strings. The binding in these examples will cause the value of the
-            attributes to be drawn from the .resx file that matches the
-            CurrentUICulture of the app at run time.
-         -->
+                    <Button Name="start" Content="Start" Click="start_Click" Margin="0,0,39,0" Height="68"/>
+                </StackPanel>
+            </phone:PanoramaItem>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0"/>
-            <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+            <!--Panorama item two-->
+            <phone:PanoramaItem Header="Data Readings">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock FontSize="28" Name="txtFileNameList" HorizontalAlignment="Left" Width="381" Height="342">List</TextBlock>
+                    <Button Name="load" Content="Load" Click="load_Click" Margin="0,0,39,0" Height="68"/>
+                </StackPanel>
+            </phone:PanoramaItem>
 
-        <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <!--Panorama item three-->
+            <phone:PanoramaItem Header="Processing Data" Orientation="Horizontal">
 
-        </Grid>
+            </phone:PanoramaItem>
+        </phone:Panorama>
 
         <!--Uncomment to see an alignment grid to help ensure your controls are
             aligned on common boundaries.  The image has a top margin of -32px to
@@ -56,7 +104,7 @@
             if the System Tray is hidden.
 
             Before shipping remove this XAML and the image itself.-->
-        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
-    </Grid>
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />-->
 
+    </Grid>
 </phone:PhoneApplicationPage>
