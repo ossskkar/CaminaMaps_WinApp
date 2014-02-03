@@ -217,6 +217,15 @@ namespace CaminaMaps
 
                 throw;
             }
+            // Create the database if it does not exist.
+            using (ToDoDataContext db = new ToDoDataContext(ToDoDataContext.DBConnectionString))
+            {
+                if (db.DatabaseExists() == false)
+                {
+                    //Create the database
+                    db.CreateDatabase();
+                }
+            }
         }
     }
 }

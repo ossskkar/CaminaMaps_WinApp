@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Phone
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CaminaMaps", "CaminaMaps\CaminaMaps.csproj", "{F9B6398A-C440-482F-BBCE-BEC3EF934AF7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8CB54D86-3744-4C08-9EF1-8014AB216988}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Windows Phone\v8.0\Icons\Dark\delete.png = ..\..\..\..\..\..\..\Program Files (x86)\Microsoft SDKs\Windows Phone\v8.0\Icons\Dark\delete.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

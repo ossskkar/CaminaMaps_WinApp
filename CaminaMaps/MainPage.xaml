@@ -87,8 +87,66 @@
             <!--Panorama item two-->
             <phone:PanoramaItem Header="Data Readings">
                 <StackPanel Orientation="Vertical">
-                    <TextBlock FontSize="28" Name="txtFileNameList" HorizontalAlignment="Left" Width="381" Height="342">List</TextBlock>
-                    <Button Name="load" Content="Load" Click="load_Click" Margin="0,0,39,0" Height="68"/>
+                    <!--***********************************************-->
+                    <Grid x:Name="ContentPanel" Grid.Row="1" Margin="2,0,2,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Bind the list box to the observable collection. -->
+                        <ListBox x:Name="toDoItemsListBox" ItemsSource="{Binding ToDoItems}" 
+                     Grid.Row="0" Margin="12, 0, 12, 0" Width="440">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid HorizontalAlignment="Stretch" Width="390">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="100" />
+                                        </Grid.ColumnDefinitions>
+                                        <CheckBox
+                                IsChecked="{Binding IsComplete, Mode=TwoWay}"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"/>
+                                        <TextBlock
+                                Text="{Binding ItemName}"
+                                FontSize="{StaticResource PhoneFontSizeLarge}"
+                                Grid.Column="1"
+                                VerticalAlignment="Center"/>
+                                        <Button
+                                Grid.Column="2"
+                                x:Name="deleteTaskButton"
+                                BorderThickness="0"                                
+                                Margin="0"
+                                Click="deleteTaskButton_Click">
+                                            <!--<Image Source="appbar.delete.rest.png"/> -->
+                                            <Image Source="delete.png"/>
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                    x:Name="newToDoTextBox"                    
+                    Grid.Column="0"
+                    Text="add new task"
+                    FontFamily="{StaticResource PhoneFontFamilyLight}"                    
+                    GotFocus="newToDoTextBox_GotFocus"/>
+                            <Button 
+                    Content="add"
+                    Grid.Column="1"
+                    x:Name="newToDoAddButton"
+                    Click="newToDoAddButton_Click"/>
+                        </Grid>
+                    </Grid>
+                    <!--***********************************************-->
                 </StackPanel>
             </phone:PanoramaItem>
 
