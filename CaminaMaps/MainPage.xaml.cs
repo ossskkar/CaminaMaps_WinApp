@@ -32,22 +32,22 @@ namespace CaminaMaps
     {
 
         // Data context for the local database
-        private ToDoDataContext toDoDB;
+        private r_path_h_DataContext r_path_hDB;
 
         // Define an observable collection property that controls can bind to.
-        private ObservableCollection<ToDoItem> _toDoItems;
-        public ObservableCollection<ToDoItem> ToDoItems
+        private ObservableCollection<r_path_h> _r_paths_h;
+        public ObservableCollection<r_path_h> r_paths_h
         {
             get
             {
-                return _toDoItems;
+                return _r_paths_h;
             }
             set
             {
-                if (_toDoItems != value)
+                if (_r_paths_h != value)
                 {
-                    _toDoItems = value;
-                    NotifyPropertyChanged("ToDoItems");
+                    _r_paths_h = value;
+                    NotifyPropertyChanged("r_paths_h");
                 }
             }
         }
@@ -84,7 +84,7 @@ namespace CaminaMaps
             InitializeComponent();
 
             // Connect to the database and instantiate data context.
-            toDoDB = new ToDoDataContext(ToDoDataContext.DBConnectionString);
+            r_path_hDB = new r_path_h_DataContext(r_path_h_DataContext.DBConnectionString);
 
             // Data context and observable collection are children of the main page.
             this.DataContext = this;
@@ -119,18 +119,21 @@ namespace CaminaMaps
             // Start 
             if (this.start.Content.Equals("Start")) 
             {
-                // Create a new to-do item based on the text box.
-                ToDoItem newToDo = new ToDoItem { ItemName = description.Text };
-
-                // Add a to-do item to the local database.
-                toDoDB.ToDoItems.InsertOnSubmit(newToDo);
-                toDoDB.SubmitChanges();
-
                 // Change label 
                 this.start.Content = "Stop";
 
                 // Set start time
                 this.txtStartTime.Text = DateTime.Now.ToString("yyy/MM/dd-HH:mm:ss.ff");
+
+                // Create a new to-do item based on the text box.
+                r_path_h new_r_path_h = new r_path_h { path_h_Description = description.Text, path_h_Subject = subject.Text, path_h_DateTime = txtStartTime.Text };
+
+                // Add a to-do item to the observable collection.
+                r_paths_h.Add(new_r_path_h);
+
+                // Add a to-do item to the local database.
+                r_path_hDB.r_paths_h.InsertOnSubmit(new_r_path_h);
+                r_path_hDB.SubmitChanges();
 
                 // Instantiate the compass 
                 compass = new Compass();
@@ -205,39 +208,33 @@ namespace CaminaMaps
             if (button != null)
             {
                 // Get a handle for the to-do item bound to the button.
-                ToDoItem toDoForDelete = button.DataContext as ToDoItem;
+                r_path_h r_path_hForDelete = button.DataContext as r_path_h;
 
                 // Remove the to-do item from the observable collection.
-                ToDoItems.Remove(toDoForDelete);
+                r_paths_h.Remove(r_path_hForDelete);
 
                 // Remove the to-do item from the local database.
-                toDoDB.ToDoItems.DeleteOnSubmit(toDoForDelete);
+                r_path_hDB.r_paths_h.DeleteOnSubmit(r_path_hForDelete);
 
                 // Save changes to the database.
-                toDoDB.SubmitChanges();
+                r_path_hDB.SubmitChanges();
 
                 // Put the focus back to the main page.
                 this.Focus();
             }
         }
 
-        private void newToDoTextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            // Clear the text box when it gets focus.
-            newToDoTextBox.Text = String.Empty;
-        }
-
-        private void newToDoAddButton_Click(object sender, RoutedEventArgs e)
+        private void syncButton_Click(object sender, RoutedEventArgs e)
         {
             // Create a new to-do item based on the text box.
-            ToDoItem newToDo = new ToDoItem { ItemName = newToDoTextBox.Text };
+            //ToDoItem newToDo = new ToDoItem { ItemName = newToDoTextBox.Text };
 
             // Add a to-do item to the observable collection.
-            ToDoItems.Add(newToDo);
+            //ToDoItems.Add(newToDo);
 
             // Add a to-do item to the local database.
-            toDoDB.ToDoItems.InsertOnSubmit(newToDo);
-            toDoDB.SubmitChanges();
+            //toDoDB.ToDoItems.InsertOnSubmit(newToDo);
+            //toDoDB.SubmitChanges();
         }
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
@@ -252,11 +249,11 @@ namespace CaminaMaps
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             // Define the query to gather all of the to-do items.
-            var toDoItemsInDB = from ToDoItem todo in toDoDB.ToDoItems
-                                select todo;
+            var r_paths_hInDB = from r_path_h path_h in r_path_hDB.r_paths_h
+                                select path_h;
 
             // Execute the query and place the results into a collection.
-            ToDoItems = new ObservableCollection<ToDoItem>(toDoItemsInDB);
+            r_paths_h = new ObservableCollection<r_path_h>(r_paths_hInDB);
 
             // Call the base method.
             base.OnNavigatedTo(e);
@@ -505,61 +502,103 @@ namespace CaminaMaps
         }
     }
 
-    public class ToDoDataContext : DataContext
+    public class r_path_h_DataContext : DataContext
     {
         // Specify the connection string as a static, used in main page and app.xaml.
-        public static string DBConnectionString = "Data Source=isostore:/ToDo.sdf";
+        public static string DBConnectionString = "Data Source=isostore:/r_path_h.sdf";
 
         // Pass the connection string to the base class.
-        public ToDoDataContext(string connectionString)
+        public r_path_h_DataContext(string connectionString)
             : base(connectionString)
         { }
 
         // Specify a single table for the to-do items.
-        public Table<ToDoItem> ToDoItems;
+        public Table<r_path_h> r_paths_h;
     }
 
     [Table]
-    public class ToDoItem : INotifyPropertyChanged, INotifyPropertyChanging
+    public class r_path_h : INotifyPropertyChanged, INotifyPropertyChanging
     {
         // Define ID: private field, public property and database column.
-        private int _toDoItemId;
+        private int _path_h_Id;
 
         [Column(IsPrimaryKey = true, IsDbGenerated = true, DbType = "INT NOT NULL Identity", CanBeNull = false, AutoSync = AutoSync.OnInsert)]
-        public int ToDoItemId
+        public int path_h_Id
         {
             get
             {
-                return _toDoItemId;
+                return _path_h_Id;
             }
             set
             {
-                if (_toDoItemId != value)
+                if (_path_h_Id != value)
                 {
-                    NotifyPropertyChanging("ToDoItemId");
-                    _toDoItemId = value;
-                    NotifyPropertyChanged("ToDoItemId");
+                    NotifyPropertyChanging("path_h_Id");
+                    _path_h_Id = value;
+                    NotifyPropertyChanged("path_h_Id");
                 }
             }
         }
 
-        // Define item name: private field, public property and database column.
-        private string _itemName;
+        // Define description field: private field, public property and database column.
+        private string _path_h_Description;
 
         [Column]
-        public string ItemName
+        public string path_h_Description
         {
             get
             {
-                return _itemName;
+                return _path_h_Description;
             }
             set
             {
-                if (_itemName != value)
+                if (_path_h_Description != value)
                 {
-                    NotifyPropertyChanging("ItemName");
-                    _itemName = value;
-                    NotifyPropertyChanged("ItemName");
+                    NotifyPropertyChanging("path_h_Description");
+                    _path_h_Description = value;
+                    NotifyPropertyChanged("path_h_Description");
+                }
+            }
+        }
+
+        // Define subject field: private field, public property and database column.
+        private string _path_h_Subject;
+
+        [Column]
+        public string path_h_Subject
+        {
+            get
+            {
+                return _path_h_Subject;
+            }
+            set
+            {
+                if (_path_h_Subject != value)
+                {
+                    NotifyPropertyChanging("path_h_Subject");
+                    _path_h_Subject = value;
+                    NotifyPropertyChanged("path_h_Subject");
+                }
+            }
+        }
+
+        // Define subject field: private field, public property and database column.
+        private string _path_h_DateTime;
+
+        [Column]
+        public string path_h_DateTime
+        {
+            get
+            {
+                return _path_h_DateTime;
+            }
+            set
+            {
+                if (_path_h_DateTime != value)
+                {
+                    NotifyPropertyChanging("path_h_DateTime");
+                    _path_h_DateTime = value;
+                    NotifyPropertyChanged("path_h_DateTime");
                 }
             }
         }

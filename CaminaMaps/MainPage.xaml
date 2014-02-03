@@ -95,8 +95,8 @@
                         </Grid.RowDefinitions>
 
                         <!-- Bind the list box to the observable collection. -->
-                        <ListBox x:Name="toDoItemsListBox" ItemsSource="{Binding ToDoItems}" 
-                     Grid.Row="0" Margin="12, 0, 12, 0" Width="440">
+                        <ListBox x:Name="r_paths_hListBox" ItemsSource="{Binding r_paths_h}" 
+                     Grid.Row="0" Margin="2, 0, 2, 0" Width="440">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid HorizontalAlignment="Stretch" Width="390">
@@ -110,7 +110,7 @@
                                 Grid.Column="0"
                                 VerticalAlignment="Center"/>
                                         <TextBlock
-                                Text="{Binding ItemName}"
+                                Text="{Binding path_h_DateTime}"
                                 FontSize="{StaticResource PhoneFontSizeLarge}"
                                 Grid.Column="1"
                                 VerticalAlignment="Center"/>
@@ -129,21 +129,13 @@
                         </ListBox>
 
                         <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBox
-                    x:Name="newToDoTextBox"                    
-                    Grid.Column="0"
-                    Text="add new task"
-                    FontFamily="{StaticResource PhoneFontFamilyLight}"                    
-                    GotFocus="newToDoTextBox_GotFocus"/>
+                            
+                            
                             <Button 
-                    Content="add"
+                    Content="Sync to Server"
                     Grid.Column="1"
-                    x:Name="newToDoAddButton"
-                    Click="newToDoAddButton_Click"/>
+                    x:Name="syncButton"
+                    Click="syncButton_Click"/>
                         </Grid>
                     </Grid>
                     <!--***********************************************-->

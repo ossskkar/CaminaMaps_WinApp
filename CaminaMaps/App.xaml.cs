@@ -218,7 +218,7 @@ namespace CaminaMaps
                 throw;
             }
             // Create the database if it does not exist.
-            using (ToDoDataContext db = new ToDoDataContext(ToDoDataContext.DBConnectionString))
+            using (r_path_h_DataContext db = new r_path_h_DataContext(r_path_h_DataContext.DBConnectionString))
             {
                 if (db.DatabaseExists() == false)
                 {
