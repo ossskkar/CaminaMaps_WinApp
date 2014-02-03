@@ -15,6 +15,11 @@ using Microsoft.Devices.Sensors;
 using Microsoft.Xna.Framework;
 using System.Windows.Threading;
 
+using System.Data.Linq;
+using System.Data.Linq.Mapping;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
+
 using System.Windows.Media;
 
 using System.IO;
@@ -49,15 +54,13 @@ namespace CaminaMaps
 
         DateTimeOffset lastUpdateTime = DateTimeOffset.MinValue;
 
+        /* Sampling rate */
         int timeBetweenUpdates = 100; /* 4 samples per second, 1s = 1000ms */
 
         // Constructor
         public MainPage()
         {
             InitializeComponent();
-
-            // Set the data context of the listbox control to the sample data
-            //DataContext = App.ViewModel;
 
             /* Check if accelerometer and compass sensors are available */
             if (!Accelerometer.IsSupported)
@@ -84,27 +87,18 @@ namespace CaminaMaps
             }
         }
 
-        // Load data for the ViewModel Items
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            //if (!App.ViewModel.IsDataLoaded)
-            //{
-            //    App.ViewModel.LoadData();
-            //}
-        }
-
         private void start_Click(object sender, RoutedEventArgs e)
         {
-            if (this.start.Content.Equals("Start")) /* Start */
+            // Start 
+            if (this.start.Content.Equals("Start")) 
             {
-                /* Change label */
+                // Change label 
                 this.start.Content = "Stop";
 
-                /* Set start time */
+                // Set start time
                 this.txtStartTime.Text = DateTime.Now.ToString("yyy/MM/dd-HH:mm:ss.ff");
 
-
-                /* Instantiate the compass */
+                // Instantiate the compass 
                 compass = new Compass();
 
                 /* Set time between updates, that is the sampling rate */
@@ -165,8 +159,10 @@ namespace CaminaMaps
                 {
                     MessageBox.Show("Unable to stop accelerometer/compass", "Error", MessageBoxButton.OK);
                 }
+               
             }
         }
+
         void compass_CurrentValueChanged(object sender, SensorReadingEventArgs<CompassReading> e)
         {
             /* Read data from compass sensor */
@@ -396,3 +392,13 @@ namespace CaminaMaps
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
